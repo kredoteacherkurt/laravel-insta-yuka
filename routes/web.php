@@ -18,7 +18,7 @@ use Illuminate\Support\Facades\Route;
 
 Auth::routes();
 
-Route::group(["middlware" => "auth"], function () {
+Route::group(["middleware" => "auth"], function () {
     Route::get('/', [App\Http\Controllers\HomeController::class, 'index'])->name('index');
 
     Route::resource('/post',PostController::class);

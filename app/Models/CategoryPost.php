@@ -10,13 +10,14 @@ class CategoryPost extends Model
     use HasFactory;
     protected $table = 'category_post';
     protected $fillable = ['post_id', 'category_id'];
+    public $timestamps = false;
     //associative array
     //  [
         // ['post_id' => 1][category_id=>1,]
     //  'post_id' => 1][category_id=>2,]
     //  'post_id' => 1][category_id=>3,]
     // ]
-    public $timestamps = false;
+
 
     public function category()
     {

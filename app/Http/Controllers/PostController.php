@@ -71,6 +71,10 @@ class PostController extends Controller
     public function show(Post $post)
     {
         //
+
+
+        return view('users.posts.show')->with('post',$post);
+
     }
 
     /**
@@ -78,7 +82,21 @@ class PostController extends Controller
      */
     public function edit(Post $post)
     {
+        if(Auth::id() != $post->user->id){
+            return redirect()->back();
+        }
         //
+        $selected_categories = [];
+        foreach($post->categoryPost as $category_post){
+            $selected_categories[] = $category_post->category_id;
+        }
+
+        $all_categories = $this->category->all();
+
+        return view('users.posts.edit')
+                ->with('all_categories',$all_categories)
+                ->with('post',$post)
+                ->with('selected_categories',$selected_categories);
     }
 
     /**
@@ -87,6 +105,22 @@ class PostController extends Controller
     public function update(Request $request, Post $post)
     {
         //
+        $post->description = $request->description;
+        if($request->image){
+            $post->image = 'data:image/' . $request->image->extension() . ';base64,' . base64_encode(file_get_contents($request->image));
+        }
+        $post->save();
+
+        $post->categoryPost()->delete();
+
+          // return $request->category;
+          foreach ($request->category as $category_id) {
+            $category_post[] = ['category_id' => $category_id];
+        }
+        $post->categoryPost()->createMany($category_post);
+
+        return redirect()->route('post.show',$post);
+
     }
 
     /**
@@ -95,5 +129,8 @@ class PostController extends Controller
     public function destroy(Post $post)
     {
         //
+        $post->delete();
+
+        return redirect()->route('index');
     }
 }
