@@ -1,5 +1,6 @@
 <?php
 
+use App\Http\Controllers\CommentController;
 use App\Http\Controllers\PostController;
 use Illuminate\Support\Facades\Route;
 
@@ -22,4 +23,5 @@ Route::group(["middleware" => "auth"], function () {
     Route::get('/', [App\Http\Controllers\HomeController::class, 'index'])->name('index');
 
     Route::resource('/post',PostController::class);
+    Route::resource('/comment',CommentController::class);
 });
