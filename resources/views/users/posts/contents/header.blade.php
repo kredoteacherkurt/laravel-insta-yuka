@@ -2,7 +2,7 @@
     <div class="row align-middle-center">
         <div class="col-auto">
             {{-- image or icon --}}
-            <a href="#">
+            <a href="{{route('profile.show',$post->id)}}">
                 @if ($post->user->avatar)
                     <img src="" alt="" class="rounded-circle avatar-sm">
                 @else
@@ -12,7 +12,7 @@
         </div>
         <div class="col ps-0">
             {{-- name --}}
-            <a href="#" class="text-decoration-none text-dark">{{$post->user->name}}</a>
+            <a href="{{route('profile.show',$post->user->id)}}" class="text-decoration-none text-dark">{{$post->user->name}}</a>
         </div>
         <div class="col-auto">
             <div class="dropdown">
